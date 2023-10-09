@@ -1,0 +1,58 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>Admin Page</h1>
+
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="~/lib/MyCss/Home.css" />
+<body>
+
+	<div style="display:flex;" class="main">
+
+		<!-- Sidebar -->
+		<div class="w3-sidebar w3-light-grey w3-bar-block" style="flex:3;">
+			<h3 class="w3-bar-item">Các Chức Năng</h3>
+			<ul>
+				<li><a asp-controller="admin" asp-action="Index" asp-route-genre="true" class="w3-bar-item w3-button" style="text-decoration:none;">Quản Lí Thể Loại Phim</a></li>
+				<li><a asp-controller="admin" asp-action="Index" asp-route-movie="true" class="w3-bar-item w3-button" style="text-decoration:none;">Quản Lí Phim</a></li>
+				<li><a asp-controller="admin" asp-action="Index" asp-route-personlist="true" class="w3-bar-item w3-button" style="text-decoration:none;">Quản Lí Member</a></li>
+			</ul>
+		</div>
+
+		<!-- Page Content -->
+		<div style="flex:7;">
+			Welcome to Admin Page !
+
+			@if (ViewBag.genre != null)
+			{
+				@Html.Partial("_table_Gener")
+				@Html.Partial("Chart_Gener")
+			}
+
+			@if (ViewBag.movie != null)
+			{
+				@Html.Partial("Chart_Movie")
+				@Html.Partial("_movie_add_form")
+				@Html.Partial("_table_Movie")
+			}
+
+			@if (ViewBag.personlist != null)
+			{
+				@Html.Partial("Char_Person")
+				@Html.Partial("_table_person")
+			}
+
+
+		</div>
+
+
+
+
+	</div>
+	</div>
+</body>
+</html>
+
+

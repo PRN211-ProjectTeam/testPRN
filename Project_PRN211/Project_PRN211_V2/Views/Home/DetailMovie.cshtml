@@ -1,0 +1,68 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="~/lib/MyCss/Home.css" />
+<body>
+
+	<div style="display:flex;" class="main">
+		@{
+			Project_PRN211_V2.Models.Movie movie = ((Project_PRN211_V2.Models.Movie)ViewBag.movie);
+		}
+		<!-- Sidebar -->
+		<div class="w3-sidebar w3-light-grey w3-bar-block" style="flex:2;">
+			<img src='data:image/jpeg;base64, @movie.Image' alt="Denim Jeans" style="width:100%;height:100%;">
+		</div>
+
+		<!-- Page Content -->
+		<div style="flex:8;">
+			<div style="display:block;margin:24px;">
+				<h1>@movie.Title</h1>
+				<p>Thể Loại:@movie.Genre.Description</p>
+				<p>
+					@{
+						double? point = 0;
+						if (@movie.Rates.Count > 0)
+						{
+							foreach (var item2 in @movie.Rates)
+							{
+								point += item2.NumericRating;
+							}
+							point /= @movie.Rates.Count;
+						}
+						else
+						{
+							point = 0;
+						}
+					}
+					@if (@point == 0)
+					{
+					<p>Chưa có điểm đánh giá </p>
+					}
+					else
+					{
+					<p>
+						Điểm:@point
+					</p>
+					}
+				</p>
+				<p>Mô tả: @movie.Description</p>
+				<p><a asp-controller="Home" asp-action="RateMovie" asp-route-idmovie="@movie.MovieId" style="text-decoration:none;"><button>Đánh Giá</button></a></p>
+			</div>
+			<div style="display:block;margin:24px;">
+				<h2>Bình Luận</h2>
+				@foreach (var item in ((List<Project_PRN211_V2.Models.Rate>)ViewBag.moviecomment))
+						{
+							<p>@item.Person.Fullname : @item.Comment </p>
+						}
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+

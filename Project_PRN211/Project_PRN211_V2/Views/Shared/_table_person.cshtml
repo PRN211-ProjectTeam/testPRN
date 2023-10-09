@@ -1,0 +1,52 @@
+﻿@model Project_PRN211_V2.Models.Person
+<h1>Person Manager</h1>
+
+@*table Person*@
+
+@if (ViewBag.message != null)
+{
+	<h3>Error:</h3>
+	@foreach (var item in (List<string>)ViewBag.message)
+	{
+		<p>@item</p>
+	}
+}
+
+<table border="1">
+	<thead>
+		<tr>
+			<td>PersonId</td>
+			<td>Fullname</td>
+			<td>Gender</td>
+			<td>Email</td>
+			<td>Password</td>
+			<td>Type</td>
+			<td>IsActive</td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in ((List<Project_PRN211_V2.Models.Person>)ViewBag.personlist))
+		{
+			<tr>
+				<td><input readonly asp-for="PersonId" form="person_@item.PersonId" type="text" value="@item.PersonId" /></td>
+				<td><input readonly asp-for="Fullname" form="person_@item.PersonId" type="text" value="@item.Fullname" /></td>
+				<td><input readonly asp-for="Gender" form="person_@item.PersonId" type="text" value="@item.Gender" /></td>
+				<td><input readonly asp-for="Email" form="person_@item.PersonId" type="text" value="@item.Email" /></td>
+				<td><input readonly asp-for="Password" form="person_@item.PersonId" type="text" value="@item.Password" /></td>
+				<td><input readonly asp-for="Type" form="person_@item.PersonId" type="text" value="@item.Type" /></td>
+				<td>
+					<select asp-for="IsActive" form="person_@item.PersonId">
+						<option hidden selected value="@item.IsActive">@item.IsActive</option>
+						<option value="@true">@true</option>
+						<option value="@false">@false</option>
+					</select>
+				</td>
+				<td>
+					<input form="person_@item.PersonId" type="submit" value="Update" />
+				</td>
+				<form id="person_@item.PersonId" asp-controller="admin" asp-action="person_update" method="post"></form>
+			</tr>
+		}
+	</tbody>
+</table>
+

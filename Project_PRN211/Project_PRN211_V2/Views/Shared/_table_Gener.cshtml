@@ -1,0 +1,27 @@
+﻿<h1>Gener Manager</h1>
+<input name="gen_des_new" form="gener_add" type="text" value="" placeholder="Enter new gener" required />
+<input form="gener_add" type="submit" value="Add" />
+<form id="gener_add" asp-controller="admin" asp-action="gener_add" method="post"></form>
+
+@*table gener*@
+<table border="1">
+	<thead>
+	<td>GenreID</td>
+	<td>Description</td>
+	<td>Modifies</td>
+	</thead>
+	<tbody>
+		@foreach (var item in ((List<Project_PRN211_V2.Models.Genre>)ViewBag.genre))
+		{
+			<tr>
+				<td><input readonly name="gen_id" form="gener_@item.GenreId" type="text" value="@item.GenreId" /></td>
+				<td><input required name="gen_des" form="gener_@item.GenreId" type="text" value="@item.Description" /></td>
+				<td>
+					<input form="gener_@item.GenreId" type="submit" value="Update" />
+					<a style="text-decoration:none;" asp-controller="admin" asp-action="gen_delete" asp-route-GenreId="@item.GenreId"><input type="button" value="Delete" /></a>
+				</td>
+			</tr>
+			<form id="gener_@item.GenreId" asp-controller="admin" asp-action="gen_update" method="post"></form>
+		}
+	</tbody>
+</table>
