@@ -75,7 +75,7 @@
 </style>
 <div id="page-content" class="page-content">
     <div class="banner">
-        <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('https://kienthucbonphuong.com/images/202006/pet-la-gi/pet-la-gi.jpg');">
+        <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('https://azpet.com.vn/wp-content/uploads/2021/07/Banner-Mobile-Cho-Canh.jpg');">
             <div class="container">
                 <h1 class="pt-5">
                     Sản phẩm của bạn
@@ -222,10 +222,11 @@
                 </div>
             </div>
             <div style="text-align:right; margin-right:3.5%">
+               
                 @if (Model.Order.OrderStatus == "Future")
                 {
                     <form method="post" asp-page-handler="active" asp-route-OrderId="@Model.Order.OrderId">
-                        <button style="color:green" type="submit">Huỷ đơn hàng</button>
+                        <button class="btn btn-danger" type="submit">Huỷ đơn hàng</button>
                     </form>
                 }
                 else
@@ -235,7 +236,7 @@
                 @ViewData["msgEmpty"]
             </div>
             <div class="modal-footer">
-                <a href="/Customers/CustomerInfomation"> <button type="button" class="btn btn-default" data-dismiss="modal">Trở lại</button></a>
+                <a href="/Customers/CustomerInfomation" class="btn btn-secondary">Trở lại</a>
             </div>
         </div>
     </div>

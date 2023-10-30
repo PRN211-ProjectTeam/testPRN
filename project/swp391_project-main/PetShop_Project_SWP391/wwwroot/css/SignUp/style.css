@@ -118,9 +118,11 @@ ul {
     font: bold 36px Arial,Helvetica,sans-serif !important;
 }
 
-    .tz-link span {
-        color: #da431c;
-    }
+
+
+.tz-link span {
+    color: #da431c;
+}
 
 html {
     background-color: #f3f3f3;
@@ -131,7 +133,7 @@ html {
     margin: 0 auto;
     padding: 55px;
     box-sizing: border-box;
-    background-color: #ffffff;
+    background-color: #f9f9f966 !important;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     font: bold 14px sans-serif;
     text-align: center;

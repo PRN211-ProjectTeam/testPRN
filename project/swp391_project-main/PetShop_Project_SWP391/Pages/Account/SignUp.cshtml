@@ -15,97 +15,99 @@
 
 <body>
     <div class="banner">
-    <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('https://kienthucbonphuong.com/images/202006/pet-la-gi/pet-la-gi.jpg');">
-    </div>
-</div>
-    <div class="main-content">
-        <form class="form-basic" asp-validation-summary="All" method="post">
+        <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('/assets/img/bn_login.jpg');">
+            <div class="main-content mt-5">
+                <form class="form-basic mt-5" asp-validation-summary="All" method="post">
 
-            <div class="form-title-row">
-                <h1>Đăng ký</h1>
+                    <div class="form-title-row">
+                        <h1>Đăng ký</h1>
+                    </div>
+
+                    <div class="form-row">
+                        <label>
+                            <span>Tên</span>
+                            <input asp-for="Customer.Name" />
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label>
+                            <span>Email</span>
+                            <input type="email" name="email" asp-for="Account.Email">
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label>
+                            <span>Tỉnh</span>
+                            <select id="provinceDropdown" onchange="loadDistricts()">
+                                <option value="">Chọn tỉnh</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label>
+                            <span>Huyện</span>
+                            <select id="districtDropdown" onchange="loadWards()">
+                                <option value="">Chọn huyện</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label>
+                            <span>Xã</span>
+                            <select id="wardDropdown">
+                                <option value="">Chọn xã</option>
+                            </select>
+                        </label>
+                    </div>
+                    <input type="hidden" asp-for="Customer.Province" id="provinceNameInput" />
+                    <input type="hidden" asp-for="Customer.District" id="districtNameInput" />
+                    <input type="hidden" asp-for="Customer.Wards" id="wardsNameInput" />
+
+                    <div class="form-row">
+                        <label>
+                            <span>Địa chỉ cụ thể</span>
+                            <textarea asp-for="Customer.Address"></textarea>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label>
+                            <span>Điện thoại</span>
+                        </label>
+                        <input id="phoneNumber" type="text" asp-for="Customer.Phone"
+                               oninput="checkPhoneNumberFormat()" />
+                        <br />
+                        <span id="phoneErrorSpan" style="color: red; text-align:center"></span>
+                        <div class="msg-error" style="text-align:center;color:red; margin-top: 5px">
+                            @ViewData["msgPhone"]
+                        </div>
+                        <br />
+                    </div>
+
+                    <div class="form-row">
+                        <input class="submits" type="submit" value="Đăng ký" style="margin-bottom: 30px;" />
+                    </div>
+                    <div class="msg-error" style="text-align:center;color:red">
+                        @ViewData["msgEmpty"]
+                        @ViewData["msgEmailSame"]
+                        @ViewData["msgEmail"]
+                        @ViewData["msgError"]
+                        @ViewData["error"]
+                    </div>
+                    <div style="text-align:left;color:green">
+                        @ViewData["msgSuccess"]
+                        @ViewData["message"]
+                    </div>
+                </form>
             </div>
 
-            <div class="form-row">
-                <label>
-                    <span>Tên</span>
-                    <input asp-for="Customer.Name" />
-                </label>
             </div>
-
-            <div class="form-row">
-                <label>
-                    <span>Email</span>
-                    <input type="email" name="email" asp-for="Account.Email">
-                </label>
-            </div>
-
-            <div class="form-row">
-                <label>
-                    <span>Tỉnh</span>
-                    <select id="provinceDropdown" onchange="loadDistricts()" >
-                        <option value="">Chọn tỉnh</option>
-                    </select>
-                </label>
-            </div>
-
-            <div class="form-row">
-                <label>
-                    <span>Huyện</span>
-                    <select id="districtDropdown" onchange="loadWards()" >
-                        <option value="">Chọn huyện</option>
-                    </select>
-                </label>
-            </div>
-
-            <div class="form-row">
-                <label>
-                    <span>Xã</span>
-                    <select id="wardDropdown" >
-                        <option value="">Chọn xã</option>
-                    </select>
-                </label>
-            </div>
-            <input type="hidden" asp-for="Customer.Province" id="provinceNameInput" />
-            <input type="hidden" asp-for="Customer.District" id="districtNameInput" />
-            <input type="hidden" asp-for="Customer.Wards" id="wardsNameInput" />
-
-            <div class="form-row">
-                <label>
-                    <span>Địa chỉ cụ thể</span>
-                    <textarea asp-for="Customer.Address"></textarea>
-                </label>
-            </div>
-
-            <div class="form-row">
-                <label>
-                    <span>Điện thoại</span>
-                </label>
-                <input id="phoneNumber" type="text" asp-for="Customer.Phone"
-                       oninput="checkPhoneNumberFormat()" />
-                <br />
-                <span id="phoneErrorSpan" style="color: red; text-align:center"></span>
-                <div class="msg-error" style="text-align:center;color:red; margin-top: 5px">
-                    @ViewData["msgPhone"]
-                </div>
-                <br />
-            </div>
-
-            <div class="form-row">
-                <input class="submits" type="submit" value="Đăng ký" style="margin-bottom: 30px;" />
-            </div>
-            <div class="msg-error" style="text-align:center;color:red">
-                @ViewData["msgEmpty"]
-                @ViewData["msgEmailSame"]
-                @ViewData["msgEmail"]
-                @ViewData["msgError"]
-                @ViewData["error"]
-            </div>
-            <div style="text-align:left;color:green">
-                @ViewData["msgSuccess"]
-                @ViewData["message"]
-            </div>
-        </form>
-    </div>
+          </div>
+    
 
 </body>
 
