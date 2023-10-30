@@ -181,12 +181,12 @@
                                                 </h4>  
                                                 @if (product.Status == false || product.QuantityPerUnit<=0)
                                                     {
-                                                <p class="card-text product-price">$@product.UnitPrice</p>
+                                                <p class="card-text product-price">@product.UnitPrice VNĐ</p>
 
                                                 <a href="#"><input type="button" value="Hết hàng" style="background-color: rgba(0, 0, 0, 0.5); color:red;border: 1px solid gray;"></a>
                                                  }
                                                  else{
-                                                <p class="card-text product-price">$@product.UnitPrice</p>
+                                                <p class="card-text product-price">@product.UnitPrice VNĐ</p>
 
                                                 @*<a asp-page="/Product/ProductDetail" asp-page-handler="addtocart" asp-route-id="@product.ProductId"><input type="button" value="ADD TO CART" style="background-color: #fff; color:red;border: 1px solid gray;"></a>*@
                                                    }
