@@ -69,11 +69,6 @@
     table.table td:last-child {
         width: 130px;
     }
-    table.table td a {
-        color: #a0a5b1;
-        display: inline-block;
-        margin: 0 5px;
-    }
 	table.table td a.view {
         color: #03A9F4;
     }
@@ -150,11 +145,12 @@ $(document).ready(function(){
                 <table class="table table-striped table-hover table-bordered">
                     <thead>
                         <tr>
-                            <th>Email </th>
-                            <th>Tên</th>
-                            <th>Địa chỉ </th>
-                            <th>Số Điện Thoại</th>
-                            <th> </th>
+                               <th class="text-nowrap">Email </th>
+                                <th class="text-nowrap">Tên</th>
+                                <th class ="text-nowrap">Địa chỉ </th>
+                                <th class="text-nowrap">Số Điện Thoại</th>
+                                <th class="text-nowrap">Trạng thái</th>
+                                <th class="text-nowrap">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>     
@@ -169,24 +165,23 @@ $(document).ready(function(){
                             <td>
                                 @if (@a.IsActive == true)
                                 {
-                                   <span>Khóa</span>
+                                   <span class="text-success">Active</span>
                                 }
                                 else
                                 {
-                                   <span>Mở</span> 
+                                   <span class ="text-danger">Inactive</span>
                                 }
                             </td>
                             <td>
                       
                                @if (@a.IsActive == true)
                                     {
-                                                    
-                                              <button><a asp-page="/Manager/CustomerList/index" asp-page-handler="active" asp-route-id="@a.AccountId">Thay Đổi</a></button>      
-                                    }
+                                            <a class="btn btn-danger" asp-page="/Manager/CustomerList/index" asp-page-handler="active" asp-route-id="@a.AccountId">Ban</a>
+                                        }
                                     else
                                     {
-                                              <button> <a asp-page="/Manager/CustomerList/index" asp-page-handler="active" asp-route-id="@a.AccountId">Thay Đổi</a></button> 
-                                    }
+                                            <a class="btn btn-success" asp-page="/Manager/CustomerList/index" asp-page-handler="active" asp-route-id="@a.AccountId">Unban</a>
+                                        }
                              </td>
                            
                         </tr>
@@ -194,35 +189,39 @@ $(document).ready(function(){
                     </tbody>
                 </table>
                 <div class="clearfix">
-                   
-                    <ul class="pagination">
-                        <li>
-                          <a href="~/Manager/CustomerList?PageNum=1&txtSearch=@ViewData["txtSearch"]">First</i></a>
-                 
-                    @if ((int)(ViewData["CurPage"]) > 1)
-                    {
-                        <a href="~/Manager/CustomerList?PageNum=@((int)ViewData["CurPage"]-1)&txtSearch=@ViewData["txtSearch"]">&laquo;</a>
-                    }
-                        </li>
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="~/Manager/CustomerList?PageNum=1&txtSearch=@ViewData["txtSearch"]">First</a>
+                                </li>
+                                @if (ViewData["CurPage"] != null && (int)ViewData["CurPage"] > 1)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="~/Manager/CustomerList?PageNum=@((int)ViewData["CurPage"] - 1)&txtSearch=@ViewData["txtSearch"]">&laquo;</a>
+                                    </li>
 
-                        <li class="active">
-                              @for (var i = 1; i <= (int)(@ViewData["TotalPage"]); i++)
-                    {
-                        if ((i - (int)@ViewData["CurPage"]) <= 1 && (i - (int)@ViewData["CurPage"]) >= -1)
-                        {
-                            <a href="~/Manager/CustomerList?PageNum=@i&txtSearch=@ViewData["txtSearch"]" class=@((int)(ViewData["CurPage"])==@i ? "active" : "")>@i</a>
-                        }
-                    }
-                        </li>
-                        
-                        <li>
-                     @if ((int)ViewData["CurPage"] < (int)ViewData["TotalPage"])
-                     {
-                            <a href="~/Manager/CustomerList?PageNum=@((int)ViewData["CurPage"]+1)&txtSearch=@ViewData["txtSearch"]">&raquo;</a>
-                     }
-                           <a href="~/Manager/CustomerList?PageNum=@ViewData["TotalPage"]&txtSearch=@ViewData["txtSearch"]">Last</a>
-                        </li>
-                    </ul>
+                                }
+
+                                @if (ViewData["CurPage"] != null)
+                                {
+                                    for (var i = 1; i <= (int)ViewData["TotalPage"]; i++)
+                                    {
+                                        <li class="page-item @(i == (int)ViewData["CurPage"] ? "active" : "")">
+                                            <a class="page-link" href="~/Manager/CustomerList?PageNum=@i&txtSearch=@ViewData["txtSearch"]">@i</a>
+                                        </li>
+                                    }
+                                }
+                                @if (ViewData["CurPage"] != null && (int)ViewData["CurPage"] < (int)ViewData["TotalPage"])
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="~/Manager/CustomerList?PageNum=@((int)ViewData["CurPage"] + 1)&txtSearch=@ViewData["txtSearch"]">&raquo;</a>
+                                    </li>
+                                }
+                                <li class="page-item">
+                                    <a class="page-link" href="~/Manager/CustomerList?PageNum=@((int)ViewData["TotalPage"])&txtSearch=@ViewData["txtSearch"]">Last</a>
+                                </li>
+                            </ul>
+                        </nav>
                 </div>
             </div>
         </div>        

@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                                 <div class="cart-item-price">
-                                  $@(cartitem.Product.UnitPrice * cartitem.Quantity)
+                                    @(cartitem.Product.UnitPrice * cartitem.Quantity)VND
                                     
                                 </div>
                                 <a asp-page="/product/cart" class="btn btn-danger mx-3" asp-page-handler="delete" asp-route-id="@cartitem.Product.ProductId">Xóa</a>

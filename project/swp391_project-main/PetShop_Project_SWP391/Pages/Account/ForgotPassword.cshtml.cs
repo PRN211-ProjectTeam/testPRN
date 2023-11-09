@@ -39,7 +39,7 @@ namespace PetShop_Project_SWP391.Pages.Account
                         // Gửi email chứa mật khẩu mới
                         using (MailMessage mail = new MailMessage())
                         {
-                            mail.From = new MailAddress("petshopswp391@gmail.com");
+                            mail.From = new MailAddress("petshoponline134@gmail.com");
                             mail.To.Add(Account.Email);
                             mail.Subject = "Password Reset";
                             mail.Body = $"Hi {Account.Email},\n\nYour new password is: {newPassword}.\n\nThank you.";
@@ -47,7 +47,7 @@ namespace PetShop_Project_SWP391.Pages.Account
                             using (SmtpClient smtpClient = new SmtpClient())
                             {
                                 smtpClient.UseDefaultCredentials = false;
-                                smtpClient.Credentials = new NetworkCredential("petshopswp391@gmail.com", "nvgezfftwyhtnrcc");
+                                smtpClient.Credentials = new NetworkCredential("petshoponline134@gmail.com", "zaby twuk rqde ujhj");
                                 smtpClient.EnableSsl = true;
                                 smtpClient.Port = 587;
                                 smtpClient.Host = "smtp.gmail.com";
