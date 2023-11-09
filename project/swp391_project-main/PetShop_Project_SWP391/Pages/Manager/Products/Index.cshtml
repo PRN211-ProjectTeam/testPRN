@@ -86,13 +86,13 @@
 		font-size: 22px;
         margin: 0 5px;
     }
-	table.table td a {
+	/* table.table td a {
 		font-weight: bold;
 		color: #566787;
 		display: inline-block;
 		text-decoration: none;
 		outline: none !important;
-	}
+	} */
 	table.table td a:hover {
 		color: #2196F3;
 	}
@@ -110,46 +110,7 @@
 		vertical-align: middle;
 		margin-right: 10px;
 	}
-    .pagination {
-        float: right;
-        margin: 0 0 5px;
-    }
-    .pagination li a {
-        border: none;
-        font-size: 16px;
-        min-width: 50px;
-        min-height: 30px;
-        color: #999;
-        margin: 0 2px;
-        line-height: 30px;
-        border-radius: 2px !important;
-        text-align: center;
-        padding: 0 6px;
-		/*background: linear-gradient(to right,#f12711, #f5af19);
-       -webkit-background-clip: text;
-       -webkit-text-fill-color: transparent;*/
-    }
-    .pagination li a:hover {
-        color: #666;
-    }	
-    .pagination li.active a, .pagination li.active a.page-link {
-        background: #03A9F4;
-    }
-    .pagination li.active a:hover {        
-        background: #0397d6;
-    }
-	.pagination li.disabled i {
-        color: #ccc;
-    }
-    .pagination li i {
-        font-size: 16px;
-        padding-top: 6px
-    }
-    .hint-text {
-        float: left;
-        margin-top: 10px;
-        font-size: 13px;
-    }    
+    
 	
 	
    .search-box {
@@ -175,41 +136,71 @@
         top: 8px;
         left: 10px;
     }
- 
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+            .pagination a {
+                padding: 6px 12px;
+                text-decoration: none;
+                border: 1px solid #ddd;
+                margin: 0 4px;
+                color: #007bff;
+            }
+
+                .pagination a.active {
+                    background-color: #007bff;
+                    color: white;
+                }
 </style>
 
 <body>
    
 	<div class="container">
+            <div class="my-4 row w-100">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol style="background: none!important;" class="breadcrumb d-flex align-items-center">
+                            <li class="breadcrumb-item">
+                                <a href="~/Manager/Index" class="text-primary">
+                                    <h3>Home</h3>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active d-flex align-items-center" aria-current="page">
+                                <h5> Danh sách Sản Phẩm</h5>
+                            </li>
+
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-12 row my-3 justify-content-between align-content-center">
+                    <div class="search-box col-12 col-md-6 w-100 mx-0">
+                        <i class="material-icons ml-2">&#xE8B6;</i>
+                        <form method="get" class="d-flex">
+                            <input asp-for="@ViewData["txtSearch"]" type="text" name="txtSearch" placeholder="Search" class="form-control" />
+                            <button class="btn btn-primary ml-2" type="submit">Tìm kiếm</button>
+                        </form>
+                    </div>
+                    <a asp-page="./Create" class="btn btn-success d-flex col-md-3 col-12 text-center justify-content-center">
+                        <i class="material-icons">&#xE147;</i>
+                        <span>Thêm mới sản phẩm</span>
+                    </a>
+                </div>
+            </div>
         <div class="table-responsive">
             <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>Danh sách <b>Sản Phẩm</b></h2>
-                        </div>
-                        <div class="col-xs-6">
-                            <a asp-page="./Create" class="btn btn-success">
-                                <i class="material-icons">&#xE147;</i>
-                                <span>Thêm mới sản phẩm</span>
-                            </a>
-                            <div class="search-box">
-                                <i class="material-icons">&#xE8B6;</i>
-                                <form method="get">
-                                    <input asp-for="@ViewData["txtSearch"]" type="text" name="txtSearch" placeholder="Search" class="form-control" />
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Tên Sản Phẩm</th>
-                            <th>Giá cả</th>
-                            <th>Phân Loại</th>
-                            <th>Trạng Thái</th>
-                            <th></th>
+                            <th class="text-nowrap">Tên Sản Phẩm</th>
+                            <th class="text-nowrap">Giá cả</th>
+                            <th class="text-nowrap">Phân Loại</th>
+                            <th class="text-nowrap">Trạng Thái</th>
+                            <th class="text-nowrap text-center">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -222,62 +213,61 @@
                                  @item.Category.CategoryName
                                 </td>
                                 <td>
-                                  @Html.DisplayFor(modelItem => item.Status)
+                                        @if (@item.Status == true)
+                                        {
+                                            <span class="text-success text-nowrap">Hoạt động</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-warning">Tạm dừng</span>
+                                        }
                                 </td>
                                 <td>
-                                 @if(item.Status == true)
-                                    {
-                                        <button>
-                                            <a asp-page="/Manager/Products/index" asp-page-handler="active" asp-route-id="@item.ProductId">Thay Đổi</a>
-                                        </button>
-                                    }
-                                    else
-                                    {
-                                        <button>
-                                            <a asp-page="/Manager/Products/index" asp-page-handler="active" asp-route-id="@item.ProductId">Thay Đổi</a>
-                                        </button>
-                                    }
+                                    <div class="d-md-flex">
+                                        @if (item.Status == true)
+                                        {
+                                                <a class="btn btn-primary mr-2" asp-page="/Manager/Products/index" asp-page-handler="active" asp-route-id="@item.ProductId">Thay Đổi</a>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-primary mr-2">
+                                                <a asp-page="/Manager/Products/index" asp-page-handler="active" asp-route-id="@item.ProductId">Thay Đổi</a>
+                                            </button>
+                                        }
+                                            <a class="btn btn-info mr-2" asp-page="./Update" asp-route-id="@item.ProductId">Cập Nhật</a>
+                                            <a class="btn btn-secondary" asp-page="./Detail" asp-route-id="@item.ProductId">Chi Tiết</a>
+                                    </div>
                                 </td>
-                                <td>
-                                    <a asp-page="./Update" asp-route-id="@item.ProductId">Cập Nhật</a> |
-                                    <a asp-page="./Detail" asp-route-id="@item.ProductId">Chi Tiết</a>
-                               </td>
                             </tr>
                         }
                     </tbody>
                 </table>
-                <div class="clearfix">
+               
+                <nav aria-label="Page navigation">
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="text" href="~/Manager/Products?PageNum=1&txtSearch=@ViewData["txtSearch"]">First</a>
-                            @if (ViewData["CurPage"] != null && (int)ViewData["CurPage"] > 1)
-                            {
-                                <a class="text" href="~/Manager/Products?PageNum=@((int)ViewData["CurPage"] - 1)&txtSearch=@ViewData["txtSearch"]">&laquo;</a>
-                            }
-                        </li>
+                        @if (ViewData["CurPage"] != null && (int)ViewData["CurPage"] > 1)
+                        {
+                            <li class="page-item">
+                                    <a class="page-link" href="~/Manager/Products?PageNum=@((int)ViewData["CurPage"] - 1)&txtSearch=@ViewData["txtSearch"]">&laquo;</a>
+                            </li>
+                        }
 
-                        <li class="page-item active">
-                            @if (ViewData["CurPage"] != null)
-                            {
-                                for (var i = 1; i <= (int)ViewData["TotalPage"]; i++)
-                                {
-                                    if ((i - (int)ViewData["CurPage"]) <= 1 && (i - (int)ViewData["CurPage"]) >= -1)
-                                    {
-                                        <a href="~/Manager/Products?PageNum=@i&txtSearch=@ViewData["txtSearch"]" class="@((int)ViewData["CurPage"] == i ? "active" : "")">@i</a>
-                                    }
-                                }
-                            }
-                        </li>
-                       <li class="page-item">
-                            @if (ViewData["CurPage"] != null && (int)ViewData["CurPage"] < (int)ViewData["TotalPage"])
-                            {
-                                <a class="text" href="~/Manager/Products?PageNum=@((int)ViewData["CurPage"] + 1)&txtSearch=@ViewData["txtSearch"]">&raquo;</a>
-                            }
-                            <a class="text" href="~/Manager/Products?PageNum=@ViewData["TotalPage"]&txtSearch=@ViewData["txtSearch"]">Last</a>
-                        </li>
+                        @for (var i = 1; i <= (int)ViewData["TotalPage"]; i++)
+                        {
+                            <li class="page-item @(i ==  (int)ViewData["CurPage"] ? "active" : "")">
+                                    <a class="page-link" href="~/Manager/Products?PageNum=@i&txtSearch=@ViewData["txtSearch"]">@i</a>
+                            </li>
+                        }
 
+
+                        @if (ViewData["CurPage"] != null && (int)ViewData["CurPage"] < (int)ViewData["TotalPage"])
+                        {
+                            <li class="page-item">
+                                    <a class="page-link" href="~/Manager/Products?PageNum=@((int)ViewData["CurPage"] + 1)&txtSearch=@ViewData["txtSearch"]">&raquo;</a>
+                            </li>
+                        }
                     </ul>
-                </div>
+                </nav>
             </div>
         </div>
     </div>

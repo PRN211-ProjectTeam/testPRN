@@ -69,11 +69,11 @@
     table.table td:last-child {
         width: 130px;
     }
-    table.table td a {
+    /* table.table td a {
         color: #a0a5b1;
         display: inline-block;
         margin: 0 5px;
-    }
+    } */
 	table.table td a.view {
         color: #03A9F4;
     }
@@ -85,44 +85,27 @@
     }
     table.table td i {
         font-size: 19px;
-    }    
-     .pagination {
-        float: right;
-        margin: 0 0 5px;
+    } 
+    
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
     }
-    .pagination li a {
-        border: none;
-        font-size: 16px;
-        min-width: 30px;
-        min-height: 30px;
-        color: #999;
-        margin: 0 2px;
-        line-height: 30px;
-        border-radius: 2px !important;
-        text-align: center;
-        padding: 0 6px;
+
+    .pagination a {
+        padding: 6px 12px;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+        color: #007bff;
     }
-    .pagination li a:hover {
-        color: #666;
-    }	
-    .pagination li.active a, .pagination li.active a.page-link {
-        background: #03A9F4;
+
+    .pagination a.active {
+        background-color: #007bff;
+        color: white;
     }
-    .pagination li.active a:hover {        
-        background: #0397d6;
-    }
-	.pagination li.disabled i {
-        color: #ccc;
-    }
-    .pagination li i {
-        font-size: 16px;
-        padding-top: 6px
-    }
-    .hint-text {
-        float: left;
-        margin-top: 6px;
-        font-size: 95%;
-    }  
     
 </style>
 <script>
@@ -132,12 +115,24 @@ $(document).ready(function(){
 </script>
 <body>
     <div class="container">
+            <nav class="my-4" aria-label="breadcrumb">
+                <ol style="background: none!important;" class="breadcrumb d-flex align-items-center">
+                    <li class="breadcrumb-item">
+                        <a href="~/Manager/Index" class="text-primary">
+                            <h3>Home</h3>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active d-flex align-items-center" aria-current="page">
+                        <h5> Danh sách Khách hàng</h5>
+                    </li>
+
+                </ol>
+            </nav>
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
-                        <div class="col-sm-8"><h2>Danh sách <b>Khách hàng</b></h2></div>
-                        <div class="col-sm-4">
+                        <div class="offset-sm-8 col-sm-4">
                             <div class="search-box">
                                 <i class="material-icons">&#xE8B6;</i>
                                  <form method="get">
@@ -152,9 +147,10 @@ $(document).ready(function(){
                         <tr>
                             <th>Email </th>
                             <th>Tên</th>
-                            <th>Địa chỉ </th>
-                            <th>Số Điện Thoại</th>
-                            <th> </th>
+                            <th class="text-nowrap">Địa chỉ </th>
+                            <th class="text-nowrap">Số Điện Thoại</th>
+                            <th class="text-nowrap"> Trạng thái </th>
+                            <th class="text-nowrap"> Thao tác </th>
                         </tr>
                     </thead>
                     <tbody>     
@@ -169,23 +165,23 @@ $(document).ready(function(){
                             <td>
                                 @if (@a.IsActive == true)
                                 {
-                                   <span>Khóa</span>
+                                   <span class="text-success text-nowrap">Hoạt động</span>
                                 }
                                 else
                                 {
-                                   <span>Mở</span> 
+                                            <span class="text-danger">Khóa</span>
                                 }
                             </td>
                             <td>
                       
                                @if (@a.IsActive == true)
                                     {
-                                                    
-                                              <button><a asp-page="/Manager/CustomerList/index" asp-page-handler="active" asp-route-id="@a.AccountId">Thay Đổi</a></button>      
-                                    }
+
+                                            <a class="btn btn-primary" asp-page="/Manager/CustomerList/index" asp-page-handler="active" asp-route-id="@a.AccountId">Thay Đổi</a>
+                                       }
                                     else
                                     {
-                                              <button> <a asp-page="/Manager/CustomerList/index" asp-page-handler="active" asp-route-id="@a.AccountId">Thay Đổi</a></button> 
+                                            <a class="btn btn-primary" asp-page="/Manager/CustomerList/index" asp-page-handler="active" asp-route-id="@a.AccountId">Thay Đổi</a>
                                     }
                              </td>
                            
@@ -193,7 +189,7 @@ $(document).ready(function(){
                    }
                     </tbody>
                 </table>
-                <div class="clearfix">
+                @* <div class="clearfix">
                    
                     <ul class="pagination">
                         <li>
@@ -223,7 +219,34 @@ $(document).ready(function(){
                            <a href="~/Manager/CustomerList?PageNum=@ViewData["TotalPage"]&txtSearch=@ViewData["txtSearch"]">Last</a>
                         </li>
                     </ul>
-                </div>
+                </div> *@
+
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        @if (ViewData["CurPage"] != null && (int)ViewData["CurPage"] > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="~/Manager/CustomerList?PageNum=@((int)ViewData["CurPage"] - 1)&txtSearch=@ViewData["txtSearch"]">&laquo;</a>
+                            </li>
+                        }
+
+                        @for (var i = 1; i <= (int)ViewData["TotalPage"]; i++)
+                        {
+                            <li class="page-item @(i ==  (int)ViewData["CurPage"] ? "active" : "")">
+                                <a class="page-link" href="~/Manager/CustomerList?PageNum=@i&txtSearch=@ViewData["txtSearch"]">@i</a>
+                            </li>
+                        }
+
+
+
+                        @if (ViewData["CurPage"] != null && (int)ViewData["CurPage"] < (int)ViewData["TotalPage"])
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="~/Manager/CustomerList?PageNum=@((int)ViewData["CurPage"] + 1)&txtSearch=@ViewData["txtSearch"]">&raquo;</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
             </div>
         </div>        
     </div>     

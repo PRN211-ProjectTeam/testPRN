@@ -51,58 +51,75 @@
             }
 </style>
 
-<h1>Danh sách Order</h1>
+<div class="container">
+    <nav class="my-4" aria-label="breadcrumb">
+        <ol style="background: none!important;" class="breadcrumb d-flex align-items-center">
+            <li class="breadcrumb-item">
+                <a href="~/Manager/Index" class="text-primary">
+                    <h3>Home</h3>
+                </a>
+            </li>
+            <li class="breadcrumb-item active d-flex align-items-center" aria-current="page">
+                <h5> Danh sách Đơn hàng</h5>
+            </li>
 
-<div class="table-container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Order ID</th>
-                <th scope="col">Tên khách hàng</th>
-                <th scope="col">Ngày mua</th>
-                <th scope="col">Trạng Thái</th>
-                <th scope="col">Ngày giao hàng</th>
-                <th scope="col">Chi tiết</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Model.Orders)
-            {
-                <tr>
-                    <td>@order.OrderId</td>
-                    <td>@order.Customer.Name</td>
-                    <td>@order.OrderDate</td>
-                    <td>
-                        @if (@order.OrderStatus == "Delivered")
-                        {
-                            <span style="color: green;">Đã nhận hàng</span>
-                        }
-                        else if (@order.OrderStatus == "Cancel")
-                        {
-                            <span style="color: red;">Đơn hàng bị huỷ</span>
-                        }
-                        else if (@order.OrderStatus == "Shipped")
-                        {
-                            <span style="color: yellow;">Giao hàng</span>
-                        }
-                        else if (@order.OrderStatus == "Future")
-                        {
-                            <span style="color: gray;">Đang trong quá trình chuẩn bị hàng</span>
-                        }
-                        else if (@order.OrderStatus == "Complete")
-                        {
-                            <span style="color: gray;">Đơn hàng đã chuẩn bị xong</span>
-                        }
-                    </td>
-                    <td>@order.ShippedDate</td>
-                    <td>
-                        <a href="/Manager/TableOrderList/Detail?orderId=@order.OrderId" class="btn btn-primary">Chi tiết</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        </ol>
+    </nav>
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-nowrap">Order ID</th>
+                        <th scope="col" class="text-nowrap">Tên khách hàng</th>
+                        <th scope="col" class="text-nowrap">Ngày mua</th>
+                        <th scope="col" class="text-nowrap">Trạng Thái</th>
+                        <th scope="col" class="text-nowrap">Ngày giao hàng</th>
+                        <th scope="col" class="text-nowrap">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model.Orders)
+                    {
+                        <tr>
+                            <td class="text-nowrap text-center">@order.OrderId</td>
+                            <td>@order.Customer.Name</td>
+                            <td>@order.OrderDate</td>
+                            <td>
+                                @if (@order.OrderStatus == "Delivered")
+                                {
+                                    <span style="color: green;">Đã nhận hàng</span>
+                                }
+                                else if (@order.OrderStatus == "Cancel")
+                                {
+                                    <span style="color: red;">Đơn hàng bị huỷ</span>
+                                }
+                                else if (@order.OrderStatus == "Shipped")
+                                {
+                                    <span style="color: yellow;">Giao hàng</span>
+                                }
+                                else if (@order.OrderStatus == "Future")
+                                {
+                                    <span style="color: gray;">Đang trong quá trình chuẩn bị hàng</span>
+                                }
+                                else if (@order.OrderStatus == "Complete")
+                                {
+                                    <span style="color: gray;">Đơn hàng đã chuẩn bị xong</span>
+                                }
+                            </td>
+                            <td>@order.ShippedDate</td>
+                            <td>
+                                <a href="/Manager/TableOrderList/Detail?orderId=@order.OrderId" class="btn btn-primary">Chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+
 @if (Model.Orders.TotalPages > 1)
 {
     <nav aria-label="Page navigation">
@@ -110,7 +127,7 @@
             @if (Model.Orders.HasPreviousPage)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-page="/Manager/TableOrderList/OrderList" asp-route-pageIndex="@(Model.Orders.PageIndex - 1)">Quay lại</a>
+                    <a class="page-link" asp-page="/Manager/TableOrderList/OrderList" asp-route-pageIndex="@(Model.Orders.PageIndex - 1)">&laquo;</a>
                 </li>
             }
 
@@ -124,7 +141,7 @@
             @if (Model.Orders.HasNextPage)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-page="/Manager/TableOrderList/OrderList" asp-route-pageIndex="@(Model.Orders.PageIndex + 1)">Tiếp theo</a>
+                    <a class="page-link" asp-page="/Manager/TableOrderList/OrderList" asp-route-pageIndex="@(Model.Orders.PageIndex + 1)">&raquo;</a>
                 </li>
             }
         </ul>
